@@ -1,7 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, MouseEvent, KeyboardEvent, useMemo } from 'react';
 import './App.css';
-
-//useCallback Memoizes a function so it's not always recreated
 
 
 interface User {
@@ -20,12 +18,25 @@ function App() {
     return () => console.log("unmounting")
   }, [users])
 
- const addTwo = useCallback(() => setCount(prev => prev +1 ), [])
+  type fibFunc = (n: number) => number
+
+  const fib: fibFunc = (n) => {
+    if (n < 2) return n
+    return fib(n - 1) + fib(n - 2)
+  }
+
+  const myNum: number = 37
+
+   //useMemo memoizes a value
+  const result = useMemo<number>(() => fib(myNum), [myNum])
+
+  //useCallback memoizes a function so it's not recreated.
+  const addTwo = useCallback((e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>): void => setCount(prev => prev + 1), [])
 
   return (
     <div className="App">
       <h1> {count} </h1>
-      <button onClick={() => setCount(prev => prev + 1)}> Add </button>
+      <button onClick={addTwo}> Add </button>
     </div>
   );
 }
