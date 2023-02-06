@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, MouseEvent, KeyboardEvent, useMemo } from 'react';
+import { useState, useEffect, useCallback, MouseEvent, KeyboardEvent, useRef, useMemo } from 'react';
 import './App.css';
 
 
@@ -11,6 +11,11 @@ interface User {
 function App() {
   const [count, setCount] = useState<number>(5)
   const [users, setUsers] = useState<User[] | null>(null)
+
+  const inputRef = useRef<HTMLInputElement>(null)
+  // When state is updated the app will not rerender
+  console.log(inputRef?.current)
+  console.log(inputRef?.current?.value)
 
   useEffect(() => {
     console.log("mounting")
@@ -27,17 +32,18 @@ function App() {
 
   const myNum: number = 37
 
-   //useMemo memoizes a value
+  //useMemo memoizes a value
   const result = useMemo<number>(() => fib(myNum), [myNum])
 
   //useCallback memoizes a function so it's not recreated.
-  const addTwo = useCallback((e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>): void => setCount(prev => prev + 1), [])
+  const addTwo = useCallback((e: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>): void => setCount(prev => prev + 2), [])
 
   return (
     <div className="App">
       <h1> {count} </h1>
       <button onClick={addTwo}> Add </button>
       <h2> {result} </h2>
+      <input ref={inputRef} type="text" />
     </div>
   );
 }
