@@ -37,6 +37,7 @@ function App() {
     <div className="App">
       <h1> {count} </h1>
       <button onClick={addTwo}> Add </button>
+      <h2> {result} </h2>
     </div>
   );
 }
