@@ -30,7 +30,7 @@ function App() {
     return fib(n - 1) + fib(n - 2)
   }
 
-  const myNum: number = 37
+  const myNum: number = 38
 
   //useMemo memoizes a value
   const result = useMemo<number>(() => fib(myNum), [myNum])
